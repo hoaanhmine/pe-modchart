@@ -40,6 +40,7 @@ class Note extends FlxSprite
 {
 	//This is needed for the hardcoded note types to appear on the Chart Editor,
 	//It's also used for backwards compatibility with 0.1 - 0.3.2 charts.
+	
 	public static final defaultNoteTypes:Array<String> = [
 		'', //Always leave this one empty pls
 		'Alt Animation',
@@ -136,6 +137,9 @@ class Note extends FlxSprite
 
 	public var hitsoundDisabled:Bool = false;
 	public var hitsoundChartEditor:Bool = true;
+
+	public var mesh:modcharting.SustainStrip = null;
+	public var z:Float = 0;
 	/**
 	 * Forces the hitsound to be played even if the user's hitsound volume is set to 0
 	**/
