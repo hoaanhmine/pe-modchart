@@ -1,5 +1,7 @@
 package states;
-
+import modcharting.ModchartFuncs;
+import modcharting.NoteMovement;
+import modcharting.PlayfieldRenderer;
 import backend.Highscore;
 import backend.StageData;
 import backend.WeekData;
@@ -634,6 +636,15 @@ class PlayState extends MusicBeatState
 		splash.alpha = 0.000001; //cant make it invisible or it won't allow precaching
 
 		super.create();
+		playfieldRenderer = new PlayfieldRenderer(strumLineNotes, notes, this);
+		playfieldRenderer.cameras = [camHUD];
+		add(playfieldRenderer);
+		add(grpNoteSplashes); // nếu bạn có note splashes
+
+		ModchartFuncs.loadLuaFunctions(); // để hỗ trợ Lua modchart
+
+		callOnLuas('onCreatePost', []); // nếu bạn dùng Lua
+		
 		Paths.clearUnusedMemory();
 
 		cacheCountdown();
@@ -891,6 +902,8 @@ class PlayState extends MusicBeatState
 			endSong();
 		else
 			startCountdown();
+			NoteMovement.getDefaultStrumPos(this);
+		
 	}
 
 	var dialogueCount:Int = 0;
